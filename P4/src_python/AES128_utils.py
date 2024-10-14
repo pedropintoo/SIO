@@ -1,5 +1,5 @@
 from cryptography.hazmat.primitives import padding
-from aes128 import *
+from AES128 import *
 
 BLOCK_SIZE = 128
 
@@ -29,7 +29,7 @@ TEST_SAMPLES = {
     "AES-128-ECB-TEST": {
         "KEY"         : "7723d87d773a8bbfe1ae5b081235b566",
         "PLAINTEXT"   : "1b0a69b7bc534c16cecffae02cc5323190ceb413f1db3e9f0f79ba654c54b601",
-        "CIPHERTEXT"  : "ad5b089515e7821087c61652dc477ab13ee2e6dcbc921409cd7060ea9d2945792cb90e7912c7c42662a651db32a313a5"
+        "CIPHERTEXT"  : "ad5b089515e7821087c61652dc477ab13ee2e6dCBC921409cd7060ea9d2945792cb90e7912c7c42662a651db32a313a5"
     },
     "AES-128-CBC-TEST": {
         "KEY"         : "0700d603a1c514e46b6191ba430a3a0c",
@@ -53,19 +53,19 @@ if __name__ == "__main__":
 
         if mode == "AES-128-TEST":
             ## AES-128 (iv with zeros)
-            cipher_text = enc_aes128(key, plain_text) 
-            decrypted_text = dec_aes128(key, cipher_text)
+            cipher_text = enc_AES128(key, plain_text) 
+            decrypted_text = dec_AES128(key, cipher_text)
             
         elif mode == "AES-128-ECB-TEST":
             ## AES-128 ECB Mode
-            cipher_text = enc_aes128_ecb(key, plain_text) 
-            decrypted_text = dec_aes128_ecb(key, cipher_text)
+            cipher_text = enc_AES128_ECB(key, plain_text) 
+            decrypted_text = dec_AES128_ECB(key, cipher_text)
             
         else:
             ## AES-128 CBC Mode
             iv = bytes.fromhex(TEST_SAMPLES[mode]["IV"])
-            cipher_text = enc_aes128_cbc(key, iv, plain_text)
-            decrypted_text = dec_aes128_cbc(key, iv, cipher_text) 
+            cipher_text = enc_AES128_CBC(key, iv, plain_text)
+            decrypted_text = dec_AES128_CBC(key, iv, cipher_text) 
 
         ## unpading
         decrypted_text = unpad(bytes.fromhex(decrypted_text)).hex()

@@ -2,14 +2,14 @@ import os
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 ## AES-128 (iv with zeros)
-def enc_aes128(key, plain_text):
+def enc_AES128(key, plain_text):
     iv = bytes.fromhex("00"*16) ## Not secure!
     cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
     encryptor = cipher.encryptor()
     cipher_text = encryptor.update(plain_text) + encryptor.finalize()
     return cipher_text
 
-def dec_aes128(key, cipher_text):
+def dec_AES128(key, cipher_text):
     iv = bytes.fromhex("00"*16) ## Not secure!
     cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
     decryptor = cipher.decryptor()
@@ -18,13 +18,13 @@ def dec_aes128(key, cipher_text):
 
 
 ## AES-128 ECB Mode
-def enc_aes128_ecb(key, plain_text):
+def enc_AES128_ECB(key, plain_text):
     cipher = Cipher(algorithms.AES(key), modes.ECB())
     encryptor = cipher.encryptor()
     cipher_text = encryptor.update(plain_text) + encryptor.finalize()
     return cipher_text
 
-def dec_aes128_ecb(key, cipher_text):
+def dec_AES128_ECB(key, cipher_text):
     cipher = Cipher(algorithms.AES(key), modes.ECB())
     decryptor = cipher.decryptor()
     plain_text = decryptor.update(cipher_text) + decryptor.finalize()
@@ -32,13 +32,13 @@ def dec_aes128_ecb(key, cipher_text):
 
 
 ## AES-128 CBC Mode
-def enc_aes128_cbc(key, iv, plain_text):
+def enc_AES128_CBC(key, iv, plain_text):
     cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
     encryptor = cipher.encryptor()
     cipher_text = encryptor.update(plain_text) + encryptor.finalize()
     return cipher_text
 
-def dec_aes128_cbc(key, iv, cipher_text):
+def dec_AES128_CBC(key, iv, cipher_text):
     cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
     decryptor = cipher.decryptor()
     plain_text = decryptor.update(cipher_text) + decryptor.finalize()
@@ -77,18 +77,18 @@ if __name__ == "__main__":
 
         if mode == "AES-128-TEST":
             ## AES-128 (iv with zeros)
-            cipher_text = enc_aes128(key, plain_text) 
-            decrypted_text = dec_aes128(key, cipher_text)
+            cipher_text = enc_AES128(key, plain_text) 
+            decrypted_text = dec_AES128(key, cipher_text)
             
         elif mode == "AES-128-ECB-TEST":
             ## AES-128 ECB Mode
-            cipher_text = enc_aes128_ecb(key, plain_text) 
-            decrypted_text = dec_aes128_ecb(key, cipher_text)
+            cipher_text = enc_AES128_ECB(key, plain_text) 
+            decrypted_text = dec_AES128_ECB(key, cipher_text)
         else:
             ## AES-128 CBC Mode
             iv = bytes.fromhex(TEST_SAMPLES[mode]["IV"])
-            cipher_text = enc_aes128_cbc(key, iv, plain_text)
-            decrypted_text = dec_aes128_cbc(key, iv, cipher_text) 
+            cipher_text = enc_AES128_CBC(key, iv, plain_text)
+            decrypted_text = dec_AES128_CBC(key, iv, cipher_text) 
 
         print("Plain Text: " + plain_text.hex())
         print("Cipher Text: " + cipher_text.hex())
